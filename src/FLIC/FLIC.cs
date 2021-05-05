@@ -61,7 +61,7 @@
                 FileSize = s.CurrentLength;
             }
 
-            Chunks = s.SerializeObjectArrayUntil<FLIC_PrimaryChunk>(Chunks, x => s.CurrentPointer.FileOffset >= Offset.FileOffset + FileSize, includeLastObj: true, onPreSerialize: x => x.Flic = this, name: nameof(Chunks));
+            Chunks = s.SerializeObjectArrayUntil<FLIC_PrimaryChunk>(Chunks, x => s.CurrentFileOffset >= Offset.FileOffset + FileSize, includeLastObj: true, onPreSerialize: x => x.Flic = this, name: nameof(Chunks));
         }
     }
 }

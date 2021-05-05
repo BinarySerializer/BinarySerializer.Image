@@ -86,7 +86,7 @@
             }
 
             // If the version is not 5 or if there is no more data to read we return
-            if (Version != 5 || s.CurrentPointer.FileOffset >= s.CurrentLength)
+            if (Version != 5 || s.CurrentFileOffset >= s.CurrentLength)
                 return;
 
             // Attempt to serialize the initial palette byte
