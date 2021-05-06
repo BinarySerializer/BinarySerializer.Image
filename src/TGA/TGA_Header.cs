@@ -2,7 +2,7 @@
 {
     public class TGA_Header : BinarySerializable
     {
-        public bool ForceNoColorMap { get; set; } // Set before serializing
+        public bool Pre_ForceNoColorMap { get; set; } // Set before serializing
 
         public byte IdentificationFieldLength { get; set; }
         public bool HasColorMap { get; set; }
@@ -51,7 +51,7 @@
             });
 
             IdentificationField = s.SerializeArray<byte>(IdentificationField, IdentificationFieldLength, name: nameof(IdentificationField));
-            ColorMap = s.SerializeArray<byte>(ColorMap, !ForceNoColorMap ? (ColorMapLength * (ColorMapEntrySize / 8)) : 0, name: nameof(ColorMap));
+            ColorMap = s.SerializeArray<byte>(ColorMap, !Pre_ForceNoColorMap ? (ColorMapLength * (ColorMapEntrySize / 8)) : 0, name: nameof(ColorMap));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace BinarySerializer.Image
 {
     public class DDS : BinarySerializable
     {
-        public bool SkipHeader { get; set; } // Set before serializing
+        public bool Pre_SkipHeader { get; set; } // Set before serializing
 
         public DDS_Header Header { get; set; }
         public DDS_Texture[] Textures { get; set; }
@@ -14,7 +14,7 @@ namespace BinarySerializer.Image
 
         public override void SerializeImpl(SerializerObject s)
         {
-            if (!SkipHeader)
+            if (!Pre_SkipHeader)
                 Header = s.SerializeObject<DDS_Header>(Header, name: nameof(Header));
 
             var texturesCount = 1;
@@ -24,7 +24,7 @@ namespace BinarySerializer.Image
                 Header.Caps2.HasFlag(DDS_Header.DDS_Caps2Flags.DDSCAPS2_CUBEMAP))
                 texturesCount = 6;
 
-            Textures = s.SerializeObjectArray(Textures, texturesCount, x => x.Header = Header, name: nameof(Textures));
+            Textures = s.SerializeObjectArray(Textures, texturesCount, x => x.Pre_Header = Header, name: nameof(Textures));
         }
 
 		public static DDS FromRawData(byte[] data, DDS_Parser.PixelFormat pixelFormat, uint width, uint height)
@@ -52,15 +52,15 @@ namespace BinarySerializer.Image
             {
                 new DDS_Texture()
                 {
-                    Header = dds.Header,
+                    Pre_Header = dds.Header,
                     Items = new DDS_TextureItem[]
                     {
                         new DDS_TextureItem()
                         {
                             ImageData = DDS_Parser.DecompressData(dds.Header, reader, pixelFormat, width, height),
-                            Header = dds.Header,
-                            Width = width,
-                            Height = height
+                            Pre_Header = dds.Header,
+                            Pre_Width = width,
+                            Pre_Height = height
                         }
                     }
                 }

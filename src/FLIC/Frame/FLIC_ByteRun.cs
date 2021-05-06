@@ -5,13 +5,13 @@ namespace BinarySerializer.Image
 {
     public class FLIC_ByteRun : BinarySerializable
     {
-        public FLIC Flic { get; set; } // Set before serializing
+        public FLIC Pre_Flic { get; set; } // Set before serializing
 
         public FLIC_ByteRunLine[] Lines { get; set; }
 
         public override void SerializeImpl(SerializerObject s)
         {
-            Lines = s.SerializeObjectArray<FLIC_ByteRunLine>(Lines, Flic.Height, x => x.Flic = Flic, name: nameof(Lines));
+            Lines = s.SerializeObjectArray<FLIC_ByteRunLine>(Lines, Pre_Flic.Height, x => x.Flic = Pre_Flic, name: nameof(Lines));
         }
 
         public class FLIC_ByteRunLine : BinarySerializable

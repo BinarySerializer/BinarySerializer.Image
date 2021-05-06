@@ -2,7 +2,7 @@
 {
     public class FLIC_Frame : BinarySerializable
     {
-        public FLIC Flic { get; set; } // Set before serializing
+        public FLIC Pre_Flic { get; set; } // Set before serializing
 
         public ushort SubChunksCount { get; set; }
         public byte[] Reserved { get; set; }
@@ -13,7 +13,7 @@
         {
             SubChunksCount = s.Serialize<ushort>(SubChunksCount, name: nameof(SubChunksCount));
             Reserved = s.SerializeArray<byte>(Reserved, 8, name: nameof(Reserved));
-            SubChunks = s.SerializeObjectArray<FLIC_FrameSubChunk>(SubChunks, SubChunksCount, x => x.Flic = Flic, name: nameof(SubChunks));
+            SubChunks = s.SerializeObjectArray<FLIC_FrameSubChunk>(SubChunks, SubChunksCount, x => x.Pre_Flic = Pre_Flic, name: nameof(SubChunks));
         }
     }
 }

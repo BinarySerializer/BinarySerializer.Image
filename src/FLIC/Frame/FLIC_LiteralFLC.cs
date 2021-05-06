@@ -2,13 +2,13 @@
 {
     public class FLIC_LiteralFLC : BinarySerializable
     {
-        public FLIC Flic { get; set; } // Set before serializing
+        public FLIC Pre_Flic { get; set; } // Set before serializing
 
         public byte[] ImgData { get; set; }
 
         public override void SerializeImpl(SerializerObject s)
         {
-            ImgData = s.SerializeArray<byte>(ImgData, Flic.Width * Flic.Height, name: nameof(ImgData));
+            ImgData = s.SerializeArray<byte>(ImgData, Pre_Flic.Width * Pre_Flic.Height, name: nameof(ImgData));
         }
     }
 }

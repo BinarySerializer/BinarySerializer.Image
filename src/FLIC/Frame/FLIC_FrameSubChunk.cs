@@ -2,7 +2,7 @@
 {
     public class FLIC_FrameSubChunk : FLIC_BaseChunk
     {
-        public FLIC Flic { get; set; } // Set before serializing
+        public FLIC Pre_Flic { get; set; } // Set before serializing
 
         // Chunk data
         public FLIC_Color256 Color256 { get; set; }
@@ -17,9 +17,9 @@
             else if (ChunkType == 0x07)
                 DeltaFLC = s.SerializeObject<FLIC_DeltaFLC>(DeltaFLC, name: nameof(DeltaFLC));
             else if (ChunkType == 0x0F)
-                ByteRun = s.SerializeObject<FLIC_ByteRun>(ByteRun, x => x.Flic = Flic, name: nameof(ByteRun));
+                ByteRun = s.SerializeObject<FLIC_ByteRun>(ByteRun, x => x.Pre_Flic = Pre_Flic, name: nameof(ByteRun));
             else if (ChunkType == 0x10)
-                LiteralFLC = s.SerializeObject<FLIC_LiteralFLC>(LiteralFLC, x => x.Flic = Flic, name: nameof(LiteralFLC));
+                LiteralFLC = s.SerializeObject<FLIC_LiteralFLC>(LiteralFLC, x => x.Pre_Flic = Pre_Flic, name: nameof(LiteralFLC));
             else
                 SerializeUnknownData(s);
         }
