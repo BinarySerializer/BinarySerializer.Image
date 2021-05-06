@@ -58,7 +58,7 @@
             else
             {
                 Speed = 30;
-                FileSize = s.CurrentLength;
+                FileSize = s.CurrentLength32;
             }
 
             Chunks = s.SerializeObjectArrayUntil<FLIC_PrimaryChunk>(Chunks, x => s.CurrentFileOffset >= Offset.FileOffset + FileSize, includeLastObj: true, onPreSerialize: x => x.Flic = this, name: nameof(Chunks));
