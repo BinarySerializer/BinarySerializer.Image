@@ -30,7 +30,7 @@ namespace BinarySerializer.Image
                 {
                     serializedPixels += Math.Abs(x.Count);
                     return serializedPixels >= Flic.Width;
-                }, includeLastObj: true, name: nameof(Packets));
+                }, name: nameof(Packets));
             }
 
             public class FLIC_ByteRunPacket : BinarySerializable

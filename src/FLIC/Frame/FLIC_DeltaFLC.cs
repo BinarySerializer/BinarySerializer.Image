@@ -20,7 +20,7 @@ namespace BinarySerializer.Image
 
             public override void SerializeImpl(SerializerObject s)
             {
-                Commands = s.SerializeObjectArrayUntil<FLIC_DeltaFLCLineCommand>(Commands, x => x.ValueType != 3, includeLastObj: true, name: nameof(Commands));
+                Commands = s.SerializeObjectArrayUntil<FLIC_DeltaFLCLineCommand>(Commands, x => x.ValueType != 3, name: nameof(Commands));
             }
 
             public class FLIC_DeltaFLCLineCommand : BinarySerializable
