@@ -42,12 +42,12 @@
             Width = s.Serialize<ushort>(Width, name: nameof(Width));
             Height = s.Serialize<ushort>(Height, name: nameof(Height));
             BitsPerPixel = s.Serialize<byte>(BitsPerPixel, name: nameof(BitsPerPixel));
-            s.SerializeBitValues<byte>(bitFunc =>
+            s.DoBits<byte>(b =>
             {
-                AttributeBitsCount = (byte)bitFunc(AttributeBitsCount, 4, name: nameof(AttributeBitsCount));
-                Reserved = (byte)bitFunc(Reserved, 1, name: nameof(Reserved));
-                OriginPoint = (TGA_Origin)bitFunc((byte)OriginPoint, 1, name: nameof(OriginPoint));
-                InterleavingFlag = (TGA_Interleaving)bitFunc((byte)InterleavingFlag, 2, name: nameof(InterleavingFlag));
+                AttributeBitsCount = (byte)b.SerializeBits<int>(AttributeBitsCount, 4, name: nameof(AttributeBitsCount));
+                Reserved = (byte)b.SerializeBits<int>(Reserved, 1, name: nameof(Reserved));
+                OriginPoint = (TGA_Origin)b.SerializeBits<int>((byte)OriginPoint, 1, name: nameof(OriginPoint));
+                InterleavingFlag = (TGA_Interleaving)b.SerializeBits<int>((byte)InterleavingFlag, 2, name: nameof(InterleavingFlag));
             });
 
             IdentificationField = s.SerializeArray<byte>(IdentificationField, IdentificationFieldLength, name: nameof(IdentificationField));

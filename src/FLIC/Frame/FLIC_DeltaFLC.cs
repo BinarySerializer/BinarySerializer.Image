@@ -35,10 +35,10 @@ namespace BinarySerializer.Image
 
                 public override void SerializeImpl(SerializerObject s)
                 {
-                    s.SerializeBitValues<ushort>(bitFunc =>
+                    s.DoBits<ushort>(b =>
                     {
-                        Value = (ushort)bitFunc(Value, 14, name: nameof(Value));
-                        ValueType = (byte)bitFunc(ValueType, 2, name: nameof(ValueType));
+                        Value = (ushort)b.SerializeBits<int>(Value, 14, name: nameof(Value));
+                        ValueType = (byte)b.SerializeBits<int>(ValueType, 2, name: nameof(ValueType));
                     });
 
                     if (ValueType == 0)
