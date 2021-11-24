@@ -37,8 +37,8 @@ namespace BinarySerializer.Image
                 {
                     s.DoBits<ushort>(b =>
                     {
-                        Value = (ushort)b.SerializeBits<int>(Value, 14, name: nameof(Value));
-                        ValueType = (byte)b.SerializeBits<int>(ValueType, 2, name: nameof(ValueType));
+                        Value = b.SerializeBits<ushort>(Value, 14, name: nameof(Value));
+                        ValueType = b.SerializeBits<byte>(ValueType, 2, name: nameof(ValueType));
                     });
 
                     if (ValueType == 0)

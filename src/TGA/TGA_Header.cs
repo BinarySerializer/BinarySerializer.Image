@@ -44,10 +44,10 @@
             BitsPerPixel = s.Serialize<byte>(BitsPerPixel, name: nameof(BitsPerPixel));
             s.DoBits<byte>(b =>
             {
-                AttributeBitsCount = (byte)b.SerializeBits<int>(AttributeBitsCount, 4, name: nameof(AttributeBitsCount));
-                Reserved = (byte)b.SerializeBits<int>(Reserved, 1, name: nameof(Reserved));
-                OriginPoint = (TGA_Origin)b.SerializeBits<int>((byte)OriginPoint, 1, name: nameof(OriginPoint));
-                InterleavingFlag = (TGA_Interleaving)b.SerializeBits<int>((byte)InterleavingFlag, 2, name: nameof(InterleavingFlag));
+                AttributeBitsCount = b.SerializeBits<byte>(AttributeBitsCount, 4, name: nameof(AttributeBitsCount));
+                Reserved = b.SerializeBits<byte>(Reserved, 1, name: nameof(Reserved));
+                OriginPoint = b.SerializeBits<TGA_Origin>(OriginPoint, 1, name: nameof(OriginPoint));
+                InterleavingFlag = b.SerializeBits<TGA_Interleaving>(InterleavingFlag, 2, name: nameof(InterleavingFlag));
             });
 
             IdentificationField = s.SerializeArray<byte>(IdentificationField, IdentificationFieldLength, name: nameof(IdentificationField));
