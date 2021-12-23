@@ -12,7 +12,7 @@ namespace BinarySerializer.Image
             Height = height;
         }
 
-        public string Name => $"{Header.PixelFormat.FourCC}Encoding";
+        public string Name => $"{Header.PixelFormat.FourCC}";
         public DDS_Header Header { get; }
         public uint Width { get; }
         public uint Height { get; }
