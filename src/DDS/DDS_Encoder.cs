@@ -17,12 +17,14 @@ namespace BinarySerializer.Image
         public uint Width { get; }
         public uint Height { get; }
 
-        public Stream DecodeStream(Stream s)
+        public void DecodeStream(Stream input, Stream output)
         {
-            return new MemoryStream(DDS_Parser.DecompressData(new Reader(s), Header, Width, Height));
+            using var r = new Reader(input, leaveOpen: true);
+            var buffer = DDS_Parser.DecompressData(r, Header, Width, Height);
+            output.Write(buffer, 0, buffer.Length);
         }
 
-        public Stream EncodeStream(Stream s)
+        public void EncodeStream(Stream input, Stream output)
         {
             throw new NotImplementedException();
         }

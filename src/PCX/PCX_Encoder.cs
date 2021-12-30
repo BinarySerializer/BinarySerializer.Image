@@ -13,9 +13,9 @@ namespace BinarySerializer.Image
         public int DecodedLength { get; }
         public string Name => $"PCX_RLE";
 
-        public Stream DecodeStream(Stream s)
+        public void DecodeStream(Stream input, Stream output)
         {
-            using var reader = new Reader(s, leaveOpen: true);
+            using var reader = new Reader(input, leaveOpen: true);
 
             // Keep track of the index
             int index = 0;
@@ -53,12 +53,9 @@ namespace BinarySerializer.Image
 
             } while (index < buffer.Length);
 
-            return new MemoryStream(buffer);
+            output.Write(buffer, 0, buffer.Length);
         }
 
-        public Stream EncodeStream(Stream s)
-        {
-            throw new NotImplementedException();
-        }
+        public void EncodeStream(Stream input, Stream output) => throw new NotImplementedException();
     }
 }
