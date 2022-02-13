@@ -48,7 +48,7 @@ namespace BinarySerializer.Image
                     else if (ValueType == 2)
                     {
                         LastValue = (byte)(Value & 0xff);
-                        s.Log($"{nameof(LastValue)}: {LastValue}");
+                        s.Log("{0}: {1}", nameof(LastValue), LastValue);
                         PacketsCount = s.Serialize<ushort>(PacketsCount, name: nameof(PacketsCount));
                     }
                     else if (ValueType == 3)
@@ -57,7 +57,7 @@ namespace BinarySerializer.Image
                             Skip = (short)(Value | 0xC000);
                         else
                             Skip = (short)Value;
-                        s.Log($"{nameof(Skip)}: {Skip}");
+                        s.Log("{0}: {1}", nameof(Skip), Skip);
                         PacketsCount = 0;
                     }
 
