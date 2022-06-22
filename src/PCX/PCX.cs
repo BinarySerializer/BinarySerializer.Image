@@ -72,14 +72,16 @@
             var linePaddingSize = scanLineLength * (8 / BitsPerPixel) - ImageWidth;
 
             // Create the scan-line array
-            if (ScanLines == null)
-                ScanLines = new byte[ImageHeight][];
+            ScanLines ??= new byte[ImageHeight][];
+
+            PCX_Encoder encoder = Encoding == PCX_Encoding.RLE ? new PCX_Encoder(scanLineLength) : null;
 
             // Read every scan-line
             for (int i = 0; i < ImageHeight; i++)
             {
                 // Serialize the scan-line using the PCX RLE encoding
-                ScanLines[i] = s.DoEncodedIf(new PCX_Encoder(scanLineLength), Encoding == PCX_Encoding.RLE, () => s.SerializeArray(ScanLines[i], scanLineLength, name: $"{nameof(ScanLines)}[{i}]"));
+                ScanLines[i] = s.DoEncoded(encoder, 
+                    () => s.SerializeArray(ScanLines[i], scanLineLength, name: $"{nameof(ScanLines)}[{i}]"));
 
                 // Serialize padding
                 s.SerializePadding(linePaddingSize);
