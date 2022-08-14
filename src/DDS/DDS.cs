@@ -8,9 +8,9 @@ namespace BinarySerializer.Image
         public bool Pre_SkipHeader { get; set; } // Set before serializing
 
         public DDS_Header Header { get; set; }
-        public DDS_Texture[] Textures { get; set; }
+        public DDS_TextureFace[] Faces { get; set; }
 
-        public DDS_TextureItem PrimaryTexture => Textures?.FirstOrDefault()?.Items?.FirstOrDefault();
+        public DDS_MipSurface PrimaryTexture => Faces?.FirstOrDefault()?.Surfaces?.FirstOrDefault();
 
         public override void SerializeImpl(SerializerObject s)
         {
@@ -24,7 +24,7 @@ namespace BinarySerializer.Image
                 Header.Caps2.HasFlag(DDS_Header.DDS_Caps2Flags.DDSCAPS2_CUBEMAP))
                 texturesCount = 6;
 
-            Textures = s.SerializeObjectArray(Textures, texturesCount, x => x.Pre_Header = Header, name: nameof(Textures));
+            Faces = s.SerializeObjectArray(Faces, texturesCount, x => x.Pre_Header = Header, name: nameof(Faces));
         }
 
 		public static DDS FromRawData(byte[] data, DDS_Parser.PixelFormat pixelFormat, uint width, uint height)
@@ -48,14 +48,14 @@ namespace BinarySerializer.Image
             using var memStream = new MemoryStream(data);
             using var reader = new Reader(memStream);
 
-            dds.Textures = new DDS_Texture[]
+            dds.Faces = new DDS_TextureFace[]
             {
-                new DDS_Texture()
+                new DDS_TextureFace()
                 {
                     Pre_Header = dds.Header,
-                    Items = new DDS_TextureItem[]
+                    Surfaces = new DDS_MipSurface[]
                     {
-                        new DDS_TextureItem()
+                        new DDS_MipSurface()
                         {
                             ImageData = DDS_Parser.DecompressData(dds.Header, reader, pixelFormat, width, height),
                             Pre_Header = dds.Header,

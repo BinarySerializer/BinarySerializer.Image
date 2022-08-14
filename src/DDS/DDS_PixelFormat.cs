@@ -98,7 +98,7 @@ namespace BinarySerializer.Image
         private const int DefaultSize = 32;
         public static DDS_PixelFormat DdsPfA8R8G8B8() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_RGB | DDS_PixelFormatFlags.DDPF_ALPHAPIXELS,
                 FourCC = "",
                 RGBBitCount = 32,
@@ -112,7 +112,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsPfA1R5G5B5() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_RGB | DDS_PixelFormatFlags.DDPF_ALPHAPIXELS,
                 FourCC = "",
                 RGBBitCount = 16,
@@ -126,7 +126,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsPfA4R4G4B4() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_RGB | DDS_PixelFormatFlags.DDPF_ALPHAPIXELS,
                 FourCC = "",
                 RGBBitCount = 16,
@@ -140,7 +140,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsPfR8G8B8() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_RGB,
                 FourCC = "",
                 RGBBitCount = 24,
@@ -154,7 +154,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsPfR5G6B5() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_RGB,
                 FourCC = "",
                 RGBBitCount = 16,
@@ -172,7 +172,7 @@ namespace BinarySerializer.Image
 
         private static DDS_PixelFormat DdsPfDx(string FourCC, bool normalFlag = false) {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_FOURCC,
                 FourCC = FourCC
             };
@@ -184,7 +184,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsLuminance() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 Flags = DDS_PixelFormatFlags.DDPF_LUMINANCE,
                 RGBBitCount = 32,
                 RBitMask = 0x000000ff
@@ -194,7 +194,7 @@ namespace BinarySerializer.Image
 
         public static DDS_PixelFormat DdsATI2() {
             DDS_PixelFormat pixelFormat = new DDS_PixelFormat {
-                Size = DefaultSize,
+                StructSize = DefaultSize,
                 RGBBitCount = 24,
                 Flags = DDS_PixelFormatFlags.DDPF_FOURCC,
                 FourCC = "ATI2"

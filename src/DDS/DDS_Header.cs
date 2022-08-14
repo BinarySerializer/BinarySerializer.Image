@@ -4,8 +4,6 @@ namespace BinarySerializer.Image
 {
     public class DDS_Header : BinarySerializable
     {
-        public uint Magic { get; set; }
-
         public uint StructSize { get; set; }
         public DDS_HeaderFlags Flags { get; set; }
         public uint Height { get; set; }
@@ -30,10 +28,7 @@ namespace BinarySerializer.Image
 
         public override void SerializeImpl(SerializerObject s)
         {
-            Magic = s.Serialize<uint>(Magic, name: nameof(Magic));
-
-            if (Magic != 0x20534444)
-                throw new BinarySerializableException(this, "Invalid DDS header");
+            s.SerializeMagic(0x20534444);
 
             StructSize = s.Serialize<uint>(StructSize, name: nameof(StructSize));
 

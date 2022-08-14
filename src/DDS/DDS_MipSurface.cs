@@ -1,6 +1,6 @@
 ﻿namespace BinarySerializer.Image
 {
-    public class DDS_TextureItem : BinarySerializable
+    public class DDS_MipSurface : BinarySerializable
     {
         // Set before serializing
         public DDS_Header Pre_Header { get; set; }
