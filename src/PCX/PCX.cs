@@ -80,8 +80,8 @@
             for (int i = 0; i < ImageHeight; i++)
             {
                 // Serialize the scan-line using the PCX RLE encoding
-                ScanLines[i] = s.DoEncoded(encoder, 
-                    () => s.SerializeArray(ScanLines[i], scanLineLength, name: $"{nameof(ScanLines)}[{i}]"));
+                s.DoEncoded(encoder, () => 
+                    ScanLines[i] = s.SerializeArray(ScanLines[i], scanLineLength, name: $"{nameof(ScanLines)}[{i}]"));
 
                 // Serialize padding
                 s.SerializePadding(linePaddingSize);
