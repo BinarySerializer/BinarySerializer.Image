@@ -21,7 +21,7 @@ namespace BinarySerializer.Image
             if (s.CurrentPointer != endOffset)
             {
                 if (Math.Abs(s.CurrentPointer - Offset - ChunkSize) >= 4)
-                    s.SystemLog?.LogWarning($"Chunk size doesn't match! Type: {ChunkType}, Size: {ChunkSize}, Parsed: {s.CurrentPointer - Offset}");
+                    s.SystemLogger?.LogWarning($"Chunk size doesn't match! Type: {ChunkType}, Size: {ChunkSize}, Parsed: {s.CurrentPointer - Offset}");
                 s.Goto(endOffset);
             }
         }
@@ -30,7 +30,7 @@ namespace BinarySerializer.Image
 
         public void SerializeUnknownData(SerializerObject s)
         {
-            s.SystemLog?.LogWarning($"Unknown FLIC chunk type {ChunkType} of size {ChunkSize} at {Offset}");
+            s.SystemLogger?.LogWarning($"Unknown FLIC chunk type {ChunkType} of size {ChunkSize} at {Offset}");
             Chunk_Data = s.SerializeArray<byte>(Chunk_Data, ChunkSize - 6, name: nameof(Chunk_Data));
         }
     }
