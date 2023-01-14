@@ -9,6 +9,7 @@ namespace BinarySerializer.Image
 
         public TGA_Header Header { get; set; }
         public BaseColor[] RGBImageData { get; set; }
+        public TGA_Footer Footer { get; set; }
 
         public override void SerializeImpl(SerializerObject s)
         {
@@ -35,6 +36,11 @@ namespace BinarySerializer.Image
                 _ => throw new NotImplementedException(
                     $"Not implemented support for textures with type {Header.ImageType}")
             };
+        }
+
+        public void SerializeFooter(SerializerObject s)
+        {
+            Footer = s.SerializeObject<TGA_Footer>(Footer, name: nameof(Footer));
         }
 
         public enum RGBColorOrder
