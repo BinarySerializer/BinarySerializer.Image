@@ -15,13 +15,13 @@
         {
             public byte Skip { get; set; }
             public byte Count { get; set; }
-            public RGB888Color[] Colors { get; set; }
+            public SerializableColor[] Colors { get; set; }
 
             public override void SerializeImpl(SerializerObject s)
             {
                 Skip = s.Serialize<byte>(Skip, name: nameof(Skip));
                 Count = s.Serialize<byte>(Count, name: nameof(Count));
-                Colors = s.SerializeObjectArray(Colors, Count == 0 ? 256 : Count, name: nameof(Colors));
+                Colors = s.SerializeIntoArray<SerializableColor>(Colors, Count == 0 ? 256 : Count, BytewiseColor.RGB888, name: nameof(Colors));
             }
         }
     }

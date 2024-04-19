@@ -8,7 +8,7 @@ namespace BinarySerializer.Image
         public bool Pre_SkipHeader { get; set; } // Set before serializing
 
         public TGA_Header Header { get; set; }
-        public BaseColor[] RGBImageData { get; set; }
+        public SerializableColor[] RGBImageData { get; set; }
         public TGA_Footer Footer { get; set; }
 
         public override void SerializeImpl(SerializerObject s)
@@ -18,23 +18,19 @@ namespace BinarySerializer.Image
             
             RGBImageData = Header.ImageType switch
             {
-                TGA_ImageType.UnmappedRGB => (Header.BitsPerPixel switch
-                {
-                    24 => Pre_ColorOrder == RGBColorOrder.RGB
-                        ? (BaseColor[]) s.SerializeObjectArray<RGB888Color>((RGB888Color[]) RGBImageData,
-                            Header.Width * Header.Height, name: nameof(RGBImageData))
-                        : s.SerializeObjectArray<BGR888Color>((BGR888Color[]) RGBImageData,
-                            Header.Width * Header.Height, name: nameof(RGBImageData)),
-                    32 => Pre_ColorOrder == RGBColorOrder.RGB
-                        ? (BaseColor[]) s.SerializeObjectArray<RGBA8888Color>((RGBA8888Color[]) RGBImageData,
-                            Header.Width * Header.Height, name: nameof(RGBImageData))
-                        : s.SerializeObjectArray<BGRA8888Color>((BGRA8888Color[]) RGBImageData,
-                            Header.Width * Header.Height, name: nameof(RGBImageData)),
-                    _ => throw new NotImplementedException(
-                        $"Not implemented support for textures with type {Header.ImageType} with bpp {Header.BitsPerPixel}")
-                }),
-                _ => throw new NotImplementedException(
-                    $"Not implemented support for textures with type {Header.ImageType}")
+                TGA_ImageType.UnmappedRGB => s.SerializeIntoArray<SerializableColor>(
+                    obj: RGBImageData,
+                    count: Header.Width * Header.Height, 
+                    serializeFunc: Header.BitsPerPixel switch
+                    {
+                        24 when Pre_ColorOrder is RGBColorOrder.RGB => BytewiseColor.RGB888,
+                        24 when Pre_ColorOrder is RGBColorOrder.BGR => BytewiseColor.BGR888,
+                        32 when Pre_ColorOrder is RGBColorOrder.RGB => BytewiseColor.RGBA8888,
+                        32 when Pre_ColorOrder is RGBColorOrder.BGR => BytewiseColor.BGRA8888,
+                        _ => throw new NotImplementedException($"Not implemented support for textures with type {Header.ImageType} with bpp {Header.BitsPerPixel}")
+                    }, 
+                    name: nameof(RGBImageData)),
+                _ => throw new NotImplementedException($"Not implemented support for textures with type {Header.ImageType}")
             };
         }
 

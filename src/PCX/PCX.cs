@@ -18,7 +18,7 @@
         public ushort HorizontalDPI { get; set; }
         public ushort VerticalDPI { get; set; }
 
-        public RGB888Color[] EGAPalette { get; set; }
+        public SerializableColor[] EGAPalette { get; set; }
 
         public byte Reserved1 { get; set; }
 
@@ -32,7 +32,7 @@
 
         public byte[][] ScanLines { get; set; }
         public byte VGAPaletteStart { get; set; }
-        public RGB888Color[] VGAPalette { get; set; }
+        public SerializableColor[] VGAPalette { get; set; }
 
         public int ImageWidth => XEnd - XStart + 1;
         public int ImageHeight => YEnd - YStart + 1;
@@ -58,7 +58,7 @@
             YEnd = s.Serialize<ushort>(YEnd, name: nameof(YEnd));
             HorizontalDPI = s.Serialize<ushort>(HorizontalDPI, name: nameof(HorizontalDPI));
             VerticalDPI = s.Serialize<ushort>(VerticalDPI, name: nameof(VerticalDPI));
-            EGAPalette = s.SerializeObjectArray<RGB888Color>(EGAPalette, 16, name: nameof(EGAPalette));
+            EGAPalette = s.SerializeIntoArray<SerializableColor>(EGAPalette, 16, BytewiseColor.RGB888, name: nameof(EGAPalette));
             Reserved1 = s.Serialize<byte>(Reserved1, name: nameof(Reserved1));
             BitPlaneCount = s.Serialize<byte>(BitPlaneCount, name: nameof(BitPlaneCount));
             BytesPerLine = s.Serialize<ushort>(BytesPerLine, name: nameof(BytesPerLine));
@@ -102,7 +102,7 @@
             }
 
             // Serialize the palette
-            VGAPalette = s.SerializeObjectArray<RGB888Color>(VGAPalette, 256, name: nameof(VGAPalette));
+            VGAPalette = s.SerializeIntoArray<SerializableColor>(VGAPalette, 256, BytewiseColor.RGB888, name: nameof(VGAPalette));
         }
     }
 }
